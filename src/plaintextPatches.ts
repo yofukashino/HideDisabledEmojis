@@ -7,10 +7,6 @@ export default [
         match: /(\w+\.memo\(\(function\((\w+)\){)(.*\.diversitySurrogate.*.emojiGrid)/,
         replace: `$1$2=replugged.plugins.getExports('Tharki.HideDisabledEmojis').patchEmojiPicker($2);$3`,
       },
-      {
-        match: /\.map/gms,
-        replace: `?.map`,
-      },
     ],
   },
 ] as Types.DefaultTypes.PlaintextPatch[];

@@ -1,6 +1,6 @@
 {
   "name": "hide-disabled-emojis",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "Hides disabled emojis from the emoji picker.",
   "engines": {
     "node": ">=14.0.0"

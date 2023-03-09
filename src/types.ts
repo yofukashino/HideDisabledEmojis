@@ -1,5 +1,9 @@
 export { types as DefaultTypes } from "replugged";
 import { types as DefaultTypes } from "replugged";
+export { ReactElement } from "react";
+export interface GenericModule {
+  [key: string]: DefaultTypes.AnyFunction;
+}
 export interface EmojiUtils {
   buildEmojiReactionColors: DefaultTypes.AnyFunction;
   filterUnsupportedEmojis: DefaultTypes.AnyFunction;
@@ -134,7 +138,4 @@ export interface pickerArgs {
   rowCountBySection: number[];
   sectionDescriptors: section[];
   setCollapsedSections: DefaultTypes.AnyFunction;
-}
-export interface mappedEmojiCount {
-  [key: string]: number;
 }
