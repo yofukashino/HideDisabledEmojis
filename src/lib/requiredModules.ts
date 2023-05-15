@@ -5,6 +5,12 @@ export const EmojiUtils = webpack.getByProps(
   "isEmojiFilteredOrLocked",
   "isEmojiFiltered",
 ) as unknown as Types.EmojiUtils;
-export const PickerSidebar = webpack.getBySource(
-  /substepHighlights:.*disableHighlight:.*shouldShowTutorial/,
-) as unknown as Types.GenericModule;
+export const EmojiStore = webpack.getByProps([
+  "getBackfillTopEmojis",
+  "getGuildEmoji",
+]) as unknown as Types.EmojiStore;
+
+export const { exports: PickerSidebar } = webpack.getBySource(
+  /rowCountBySection:\w+,renderSection:\w+/,
+  { raw: true },
+) as unknown as Types.GenericExport;

@@ -4,6 +4,11 @@ export { ReactElement } from "react";
 export interface GenericModule {
   [key: string]: DefaultTypes.AnyFunction;
 }
+export interface GenericExport {
+  exports: GenericModule;
+  id: number;
+  loaded: boolean;
+}
 export interface EmojiUtils {
   buildEmojiReactionColors: DefaultTypes.AnyFunction;
   filterUnsupportedEmojis: DefaultTypes.AnyFunction;
@@ -18,16 +23,31 @@ export interface EmojiUtils {
   isInternalEmojiForGuildId: DefaultTypes.AnyFunction;
   sanitizeEmojiName: DefaultTypes.AnyFunction;
 }
+export interface EmojiStore {
+  getBackfillTopEmojis: DefaultTypes.AnyFunction;
+  getCustomEmojiById: DefaultTypes.AnyFunction;
+  getDisambiguatedEmojiContext: DefaultTypes.AnyFunction;
+  getGuildEmoji: (id: string) => emoji[];
+  getGuilds: DefaultTypes.AnyFunction;
+  getNewlyAddedEmoji: DefaultTypes.AnyFunction;
+  getSearchResultsOrder: DefaultTypes.AnyFunction;
+  getState: DefaultTypes.AnyFunction;
+  getTopEmoji: DefaultTypes.AnyFunction;
+  getTopEmojisMetadata: DefaultTypes.AnyFunction;
+  getUsableCustomEmojiById: DefaultTypes.AnyFunction;
+  hasPendingUsage: DefaultTypes.AnyFunction;
+  hasUsableEmojiInAnyGuild: DefaultTypes.AnyFunction;
+  initialize: DefaultTypes.AnyFunction;
+  searchWithoutFetchingLatest: DefaultTypes.AnyFunction;
+}
 export interface emoji {
   animated: boolean;
   available: boolean;
-
   name: string;
   originalName?: string; // when a name ends with ~num
   url: string;
   id: string;
   guildId: string;
-
   emojiObject?: {
     names: string[];
     surrogates: string;

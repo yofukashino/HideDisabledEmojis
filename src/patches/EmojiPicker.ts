@@ -1,3 +1,4 @@
+import { EmojiStore, EmojiUtils } from "../lib/requiredModules";
 import * as Types from "../types";
 export const mappedEmojiCount = new Map<string, number>();
 export const patchEmojiPicker = (pickerArgs: Types.pickerArgs): Types.pickerArgs => {
@@ -6,7 +7,7 @@ export const patchEmojiPicker = (pickerArgs: Types.pickerArgs): Types.pickerArgs
     ?.map((m) => m.filter((m) => !m.isDisabled))
     .filter((m) => m.length);
   pickerArgs.rowCount = pickerArgs.emojiGrid.length;
-  if (!pickerArgs.sectionDescriptors) return;
+  if (!pickerArgs?.sectionDescriptors) return pickerArgs;
 
   for (const emojiItem of pickerArgs.emojiGrid.flat(Infinity) as Types.emojiRecord[]) {
     mappedEmojiCount.set("PREMIUM_UPSELL", 0);
@@ -22,20 +23,34 @@ export const patchEmojiPicker = (pickerArgs: Types.pickerArgs): Types.pickerArgs
         (mappedEmojiCount.get(emojiItem?.emoji?.guildId) || 0) + 1,
       );
   }
-
+  const shouldReturnOriginal = (section): boolean => {
+    if (
+      section?.type?.toLowerCase() == "unicode" ||
+      section?.type?.toLowerCase() == "top_guild_emoji"
+    )
+      return true;
+    const UsableEmojisInGuild = EmojiStore.getGuildEmoji(section?.sectionId).filter(
+      (emoji) => !EmojiUtils.isEmojiDisabled(emoji),
+    );
+    if (
+      !mappedEmojiCount.get(section?.sectionId) &&
+      pickerArgs?.collapsedSections?.has(section?.sectionId)
+    )
+      return (
+        Boolean(UsableEmojisInGuild.length) || pickerArgs?.channelGuildId == section?.sectionId
+      );
+  };
   pickerArgs.sectionDescriptors = pickerArgs?.sectionDescriptors
     ?.map((section) => {
-      if (
-        section?.type?.toLowerCase() == "unicode" ||
-        section?.type?.toLowerCase() == "top_guild_emoji"
-      )
-        return section;
+      if (shouldReturnOriginal(section)) return section;
       section.count = mappedEmojiCount.has(section.type)
         ? mappedEmojiCount.get(section?.type)
-        : mappedEmojiCount.get(section?.guild?.id);
+        : mappedEmojiCount.get(section?.sectionId);
       return section;
     })
     .filter((section) => section.count);
-  pickerArgs.rowCountBySection = pickerArgs?.sectionDescriptors?.map((m) => Math.ceil(m.count / 9));
+  pickerArgs.rowCountBySection = pickerArgs?.sectionDescriptors?.map((s) =>
+    pickerArgs?.collapsedSections.has(s?.sectionId) ? 0 : Math.ceil(s.count / 9),
+  );
   return pickerArgs;
 };
