@@ -1,7 +1,8 @@
-import { webpack } from "replugged";
+import { common, webpack } from "replugged";
 import { PluginInjector } from "../index";
 import { EmojiStore, EmojiUtils, PickerSidebar } from "../lib/requiredModules";
 import * as Types from "../types";
+const { guilds: UltimateGuildsStore } = common;
 export const patchEmojiSidebar = (): void => {
   const SidebarRender = webpack.getFunctionKeyBySource(
     PickerSidebar,
@@ -11,7 +12,11 @@ export const patchEmojiSidebar = (): void => {
     const [sidebarProps] = args;
     sidebarProps.categories = sidebarProps.categories
       .map((category) => {
-        if (!category?.guild) return category;
+        if (
+          !category?.guild ||
+          (UltimateGuildsStore.getGuildId() == category?.guild?.id && !sidebarProps.children())
+        )
+          return category;
         const UsableEmojisInGuild = EmojiStore.getGuildEmoji(category?.guild?.id).filter(
           (emoji) => !EmojiUtils.isEmojiDisabled(emoji),
         );
@@ -34,6 +39,8 @@ export const patchEmojiSidebar = (): void => {
         return res;
       },
     );
+    if (!sidebarProps.categories.some((category) => category?.type == "GUILD"))
+      PluginInjector.instead(sidebarProps, "children", () => null);
     return args;
   });
 };
