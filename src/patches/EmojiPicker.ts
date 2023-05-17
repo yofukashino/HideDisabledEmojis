@@ -3,11 +3,7 @@ import * as Types from "../types";
 
 export const patchEmojiPicker = (pickerArgs: Types.pickerArgs): Types.pickerArgs => {
   const mappedEmojiCount = new Map<string, number>();
-
-  const shouldReturnOriginal = (section): boolean =>
-    section?.type === "UNICODE" || section?.type === "TOP_GUILD_EMOJI";
-
-  const shouldNotFilter = (section): boolean => {
+  const isCollapsedButUsable = (section): boolean => {
     const usableEmojisInGuild = EmojiStore.getGuildEmoji(section?.sectionId).filter(
       (emoji) => !EmojiUtils.isEmojiDisabled(emoji),
     );
@@ -22,6 +18,10 @@ export const patchEmojiPicker = (pickerArgs: Types.pickerArgs): Types.pickerArgs
         section?.sectionId == "RECENT"
       );
   };
+  const shouldReturnOriginal = (section): boolean =>
+    section?.type === "UNICODE" ||
+    section?.type === "TOP_GUILD_EMOJI" ||
+    isCollapsedButUsable(section);
 
   pickerArgs.emojiGrid = pickerArgs?.emojiGrid
     ?.map((row) => row.filter((item) => !item.isDisabled))
@@ -57,7 +57,7 @@ export const patchEmojiPicker = (pickerArgs: Types.pickerArgs): Types.pickerArgs
 
       return section;
     })
-    .filter((section) => section.count && !shouldNotFilter(section));
+    .filter((section) => section.count);
 
   pickerArgs.rowCountBySection = pickerArgs?.sectionDescriptors?.map((section) =>
     pickerArgs?.collapsedSections.has(section?.sectionId) ? 0 : Math.ceil(section.count / 9),
