@@ -5,7 +5,7 @@ export default [
     replacements: [
       {
         match: /([^]*)(\w+\.memo\(\(function\((\w+)\){)([^]*?\.diversitySurrogate[^]*?\.emojiGrid)/,
-        replace: `$1$2$3=replugged.plugins.getExports('dev.tharki.HideDisabledEmojis').patchEmojiPicker($3);$4`,
+        replace: `$1$2$3=replugged.plugins.getExports('dev.tharki.HideDisabledEmojis').patchEmojiPicker($3) ?? $3;$4`,
       },
     ],
   },
