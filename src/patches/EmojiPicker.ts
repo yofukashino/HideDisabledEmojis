@@ -5,9 +5,9 @@ export const patchEmojiPicker = (pickerArgs: Types.pickerArgs): Types.pickerArgs
   const mappedEmojiCount = new Map<string, number>();
 
   const shouldReturnOriginal = (section): boolean =>
-    section?.type?.toLowerCase() == "unicode" || section?.type?.toLowerCase() == "top_guild_emoji";
+    section?.type === "UNICODE" || section?.type === "TOP_GUILD_EMOJI";
 
-  const makeCountOne = (section): boolean => {
+  const shouldNotFilter = (section): boolean => {
     const usableEmojisInGuild = EmojiStore.getGuildEmoji(section?.sectionId).filter(
       (emoji) => !EmojiUtils.isEmojiDisabled(emoji),
     );
@@ -34,7 +34,11 @@ export const patchEmojiPicker = (pickerArgs: Types.pickerArgs): Types.pickerArgs
   for (const emojiItem of pickerArgs.emojiGrid.flat(Infinity) as Types.emojiRecord[]) {
     mappedEmojiCount.set("PREMIUM_UPSELL", 0);
 
-    if (!emojiItem?.emoji?.guildId) {
+    if (
+      emojiItem?.category === "UNICODE" ||
+      emojiItem?.category === "TOP_GUILD_EMOJI" ||
+      emojiItem?.category === "RECENT"
+    ) {
       mappedEmojiCount.set(emojiItem.category, (mappedEmojiCount.get(emojiItem.category) || 0) + 1);
     } else {
       mappedEmojiCount.set(
@@ -48,13 +52,12 @@ export const patchEmojiPicker = (pickerArgs: Types.pickerArgs): Types.pickerArgs
     ?.map((section) => {
       if (shouldReturnOriginal(section)) return section;
 
-      section.count = makeCountOne(section)
-        ? 1
-        : mappedEmojiCount.get(section?.type) ?? mappedEmojiCount.get(section?.sectionId);
+      section.count =
+        mappedEmojiCount.get(section?.type) ?? mappedEmojiCount.get(section?.sectionId);
 
       return section;
     })
-    .filter((section) => section.count);
+    .filter((section) => section.count && !shouldNotFilter(section));
 
   pickerArgs.rowCountBySection = pickerArgs?.sectionDescriptors?.map((section) =>
     pickerArgs?.collapsedSections.has(section?.sectionId) ? 0 : Math.ceil(section.count / 9),

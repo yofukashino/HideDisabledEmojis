@@ -40,7 +40,8 @@ export const patchEmojiSidebar = (): void => {
       },
     );
     if (!sidebarProps.categories.some((category) => category?.type == "GUILD"))
-      PluginInjector.instead(sidebarProps, "children", () => null);
+      if (typeof sidebarProps?.children == "function")
+        PluginInjector.instead(sidebarProps, "children", () => null);
     return args;
   });
 };
