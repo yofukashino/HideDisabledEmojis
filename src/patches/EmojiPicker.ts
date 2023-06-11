@@ -2,7 +2,6 @@ import { EmojiStore, EmojiUtils } from "../lib/requiredModules";
 import * as Types from "../types";
 
 export const patchEmojiPicker = (pickerArgs: Types.pickerArgs): Types.pickerArgs => {
-  console.log(pickerArgs);
   const mappedEmojiCount = new Map<string, number>();
   const isCollapsedButUsable = (section): boolean => {
     const usableEmojisInGuild = EmojiStore.getGuildEmoji(section?.sectionId).filter(
