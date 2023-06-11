@@ -2,15 +2,17 @@
   "id": "dev.tharki.HideDisabledEmojis",
   "name": "HideDisabledEmojis",
   "description": "Hides disabled emojis from the emoji picker.",
+  "image": "https://tharki-god.github.io/files-random-host/bdpluginsassets/HideDisabledEmojis.png",
+  "source": "https://github.com/Tharki-God/HideDisabledEmojis",
   "author": {
     "name": "Ahlawat",
     "discordID": "1025214794766221384",
     "github": "Tharki-God"
   },
-  "version": "0.9.7",
+  "version": "0.9.8",
   "updater": {
-    "type": "github",
-    "id": "Tharki-God/HideDisabledEmojis"
+    "type": "store",
+    "id": "dev.tharki.HideDisabledEmojis"
   },
   "license": "MIT",
   "type": "replugged-plugin",

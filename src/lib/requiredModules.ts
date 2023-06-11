@@ -1,16 +1,16 @@
 import { webpack } from "replugged";
 import * as Types from "../types";
 
-export const EmojiUtils = webpack.getByProps(
+export const EmojiUtils = webpack.getByProps<Types.EmojiUtils>([
   "isEmojiFilteredOrLocked",
   "isEmojiFiltered",
-) as unknown as Types.EmojiUtils;
-export const EmojiStore = webpack.getByProps([
+]);
+export const EmojiStore = webpack.getByProps<Types.EmojiStore>([
   "getBackfillTopEmojis",
   "getGuildEmoji",
-]) as unknown as Types.EmojiStore;
+]);
 
-export const { exports: PickerSidebar } = webpack.getBySource(
+export const { exports: PickerSidebar } = webpack.getBySource<Types.GenericExport>(
   /rowCountBySection:\w+,renderSection:\w+/,
   { raw: true },
-) as unknown as Types.GenericExport;
+);

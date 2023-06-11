@@ -1,9 +1,7 @@
 export { types as DefaultTypes } from "replugged";
 import { types as DefaultTypes } from "replugged";
 export { ReactElement } from "react";
-export interface GenericModule {
-  [key: string]: DefaultTypes.AnyFunction;
-}
+export interface GenericModule extends Record<string, DefaultTypes.AnyFunction> {}
 export interface GenericExport {
   exports: GenericModule;
   id: number;
