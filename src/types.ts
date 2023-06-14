@@ -157,3 +157,48 @@ export interface pickerArgs {
   sectionDescriptors: section[];
   setCollapsedSections: DefaultTypes.AnyFunction;
 }
+export interface sidebarProps {
+  categories: Array<{ type: string; id?: string; name?: string; guild?: Guild }>;
+  categoryHeight: DefaultTypes.AnyFunction;
+  categoryListRef: {
+    current: {
+      getListDimensions: DefaultTypes.AnyFunction;
+      getRowDescriptors: DefaultTypes.AnyFunction;
+      getScrollerNode: DefaultTypes.AnyFunction;
+      getSectionDescriptors: DefaultTypes.AnyFunction;
+      scrollIntoViewNode: DefaultTypes.AnyFunction;
+      scrollRowIntoView: DefaultTypes.AnyFunction;
+      scrollTo: DefaultTypes.AnyFunction;
+      scrollToSectionTop: DefaultTypes.AnyFunction;
+    };
+  };
+  children: DefaultTypes.AnyFunction;
+  className: string;
+  expressionsListRef: {
+    current: {
+      getListDimensions: DefaultTypes.AnyFunction;
+      getRowDescriptors: DefaultTypes.AnyFunction;
+      getScrollerNode: DefaultTypes.AnyFunction;
+      getSectionDescriptors: DefaultTypes.AnyFunction;
+      scrollIntoViewNode: DefaultTypes.AnyFunction;
+      scrollRowIntoView: DefaultTypes.AnyFunction;
+      scrollTo: DefaultTypes.AnyFunction;
+      scrollToSectionTop: DefaultTypes.AnyFunction;
+    };
+  };
+  getScrollOffsetForIndex: DefaultTypes.AnyFunction;
+  listPadding: number[];
+  onScroll: DefaultTypes.AnyFunction;
+  renderCategoryListItem: DefaultTypes.AnyFunction;
+  renderSection: DefaultTypes.AnyFunction;
+  rowCount: number;
+  rowCountBySection: number[];
+  store: {
+    getState: DefaultTypes.AnyFunction;
+    resetStoreState: DefaultTypes.AnyFunction;
+    setActiveCategoryIndex: DefaultTypes.AnyFunction;
+    setInspectedExpressionPosition: DefaultTypes.AnyFunction;
+    setSearchPlaceholder: DefaultTypes.AnyFunction;
+    useStore: DefaultTypes.AnyFunction;
+  };
+}

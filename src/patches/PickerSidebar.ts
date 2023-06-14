@@ -8,7 +8,7 @@ export const patchEmojiSidebar = (): void => {
     PickerSidebar,
     /rowCountBySection:\w+,renderSection:\w+/,
   ) as unknown as string;
-  PluginInjector.before(PickerSidebar, SidebarRender, (args) => {
+  PluginInjector.before(PickerSidebar, SidebarRender, (args: [Types.sidebarProps]) => {
     const [sidebarProps] = args;
     sidebarProps.categories = sidebarProps.categories
       .map((category) => {
