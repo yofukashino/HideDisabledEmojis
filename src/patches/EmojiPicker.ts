@@ -2,7 +2,7 @@ import { EmojiStore, EmojiUtils } from "../lib/requiredModules";
 import * as Types from "../types";
 
 export const patchEmojiPicker = (pickerArgs: Types.pickerArgs): Types.pickerArgs => {
-  const mappedEmojiCount = new Map<string, number>();
+  const mappedEmojiCount = new Map<string, number>([["PREMIUM_UPSELL", 0]]);
   const isCollapsedButUsable = (section): boolean => {
     const usableEmojisInGuild = EmojiStore.getGuildEmoji(section?.sectionId).filter(
       (emoji) => !EmojiUtils.isEmojiDisabled(emoji),
@@ -32,13 +32,10 @@ export const patchEmojiPicker = (pickerArgs: Types.pickerArgs): Types.pickerArgs
   if (!pickerArgs?.sectionDescriptors) return pickerArgs;
 
   for (const emojiItem of pickerArgs.emojiGrid.flat(Infinity) as Types.emojiRecord[]) {
-    mappedEmojiCount.set("PREMIUM_UPSELL", 0);
-
     if (
-      emojiItem?.category === "UNICODE" ||
-      emojiItem?.category === "TOP_GUILD_EMOJI" ||
-      emojiItem?.category === "RECENT" ||
-      emojiItem?.category === "SEARCH_RESULTS"
+      ["UNICODE", "TOP_GUILD_EMOJI", "RECENT", "SEARCH_RESULTS", "FAVORITES"].includes(
+        emojiItem?.category,
+      )
     ) {
       mappedEmojiCount.set(emojiItem.category, (mappedEmojiCount.get(emojiItem.category) || 0) + 1);
     } else {

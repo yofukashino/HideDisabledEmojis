@@ -9,7 +9,7 @@
     "discordID": "1025214794766221384",
     "github": "Tharki-God"
   },
-  "version": "0.9.9",
+  "version": "1.0.0",
   "updater": {
     "type": "store",
     "id": "dev.tharki.HideDisabledEmojis"
