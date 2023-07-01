@@ -1,7 +1,7 @@
 import * as Types from "./types";
 export default [
   {
-    find: /\.isDisabled.*\.showPulse/,
+    find: "emojiListRef:",
     replacements: [
       {
         match: /var \w+=(.)\.diversitySurrogate,\w+=.\.emojiGrid/,
