@@ -11,7 +11,7 @@ Install Link:
 
 [![Install in Replugged](https://img.shields.io/badge/-Install%20in%20Replugged-blue?style=for-the-badge&logo=none)](https://replugged.dev/install?identifier=dev.tharki.HideDisabledEmojis)
 
-![image](https://tharki-god.github.io/files-random-host/bdpluginsassets/HideDisabledEmojis.png)
+![preview](https://i.imgur.com/yUNq7fd.png)
 
 <sub>Inspired by a Better Discord plugin made by
 [rauenzi](https://github.com/rauenzi/BetterDiscordAddons/tree/master/Plugins/HideDisabledEmojis).</sub>
