@@ -5,7 +5,7 @@ export const patchEmojiPicker = (pickerArgs: Types.pickerArgs): Types.pickerArgs
   const mappedEmojiCount = new Map<string, number>([["PREMIUM_UPSELL", 0]]);
   const isCollapsedButUsable = (section): boolean => {
     const usableEmojisInGuild = EmojiStore.getGuildEmoji(section?.sectionId).filter(
-      (emoji) => !EmojiUtils.isEmojiDisabled(emoji),
+      (emoji) => !EmojiUtils.isEmojiDisabled({ emoji }),
     );
 
     if (
