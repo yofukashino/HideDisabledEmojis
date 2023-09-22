@@ -7,6 +7,11 @@ export interface GenericExport {
   id: number;
   loaded: boolean;
 }
+export interface GenericMemo {
+  $$typeof: symbol;
+  compare: DefaultTypes.AnyFunction;
+  type: DefaultTypes.AnyFunction;
+}
 export interface EmojiUtils {
   buildEmojiReactionColors: DefaultTypes.AnyFunction;
   filterUnsupportedEmojis: DefaultTypes.AnyFunction;

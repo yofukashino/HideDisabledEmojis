@@ -14,3 +14,7 @@ export const { exports: PickerSidebar } = webpack.getBySource<Types.GenericExpor
   /rowCountBySection:\w+,renderSection:\w+/,
   { raw: true },
 );
+
+export const { exports: EmojiPicker } = webpack.getBySource<Types.GenericExport>("emojiListRef:", {
+  raw: true,
+});

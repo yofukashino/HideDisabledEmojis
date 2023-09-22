@@ -10,4 +10,3 @@ export const start = (): void => {
 export const stop = (): void => {
   PluginInjector.uninjectAll();
 };
-export { patchEmojiPicker } from "./patches/index";

@@ -4,8 +4,15 @@ export default [
     find: "emojiListRef:",
     replacements: [
       {
-        match: /var \w+=(.)\.diversitySurrogate,\w+=.\.emojiGrid/,
-        replace: `$1=replugged.plugins.getExports('dev.tharki.HideDisabledEmojis').patchEmojiPicker($1) ?? $1;$&`,
+        match:
+          /((\w+)\s*=\s*\w+\s*\.\s*memo\s*\(\s*\(\s*function\s*\(\s*.\)\s*{\s*var\s*\w+\s*=\s*.\s*\.\s*diversitySurrogate\s*,\s*\w+\s*=\s*.\s*\.\s*emojiGrid[^]*?)(const)/,
+        replace:
+          `$1replugged.webpack.waitForModule(replugged.webpack.filters.bySource("emojiListRef:"),{raw:true, timeout: 10000}).then((mod)=>Object.defineProperty(mod.exports,"EmojiPicker",{` +
+          `get:()=>$2,` +
+          `set:(value)=>$2=value,` +
+          `configurable:true,` +
+          `writeable:true` +
+          `}));$3`,
       },
     ],
   },

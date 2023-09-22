@@ -18,7 +18,7 @@ export const patchEmojiSidebar = (): void => {
         )
           return category;
         const UsableEmojisInGuild = EmojiStore.getGuildEmoji(category?.guild?.id).filter(
-          (emoji) => !EmojiUtils.isEmojiDisabled(emoji),
+          (emoji) => !EmojiUtils.isEmojiDisabled({ emoji }),
         );
         if (UsableEmojisInGuild.length) return category;
         return null;
