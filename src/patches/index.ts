@@ -1,9 +1,9 @@
-import { patchEmojiPicker } from "./EmojiPicker";
-import { patchEmojiUtils } from "./EmojiUtils";
-import { patchEmojiSidebar } from "./PickerSidebar";
+import patchEmojiPicker from "./EmojiPicker";
+import patchEmojiUtils from "./EmojiUtils";
+import patchPickerSidebar from "./PickerSidebar";
 
 export const applyInjections = (): void => {
-  patchEmojiPicker();
+  void patchEmojiPicker();
   patchEmojiUtils();
-  patchEmojiSidebar();
+  patchPickerSidebar();
 };

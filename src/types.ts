@@ -1,16 +1,11 @@
 export { types as DefaultTypes } from "replugged";
 import { types as DefaultTypes } from "replugged";
-export { ReactElement } from "react";
+import { Guild } from "discord-types/general";
 export interface GenericModule extends Record<string, DefaultTypes.AnyFunction> {}
 export interface GenericExport {
   exports: GenericModule;
   id: number;
   loaded: boolean;
-}
-export interface GenericMemo {
-  $$typeof: symbol;
-  compare: DefaultTypes.AnyFunction;
-  type: DefaultTypes.AnyFunction;
 }
 export interface EmojiUtils {
   buildEmojiReactionColors: DefaultTypes.AnyFunction;
@@ -67,63 +62,6 @@ export interface emojiRecord {
   subCategory: string;
   type: number;
   visibleRowIndex: number;
-}
-export interface Guild {
-  afkChannelId: null | string;
-  afkTimeout: number;
-  applicationCommandCounts: {
-    [key: number]: number;
-  };
-  application_id: null | string;
-  banner: string;
-  defaultMessageNotifications: number;
-  description: string;
-  discoverySplash: null | boolean;
-  explicitContentFilter: number;
-  features: Set<string>;
-  homeHeader: null | string;
-  hubType: null | number;
-  icon: string;
-  id: string;
-  joinedAt: Date;
-  latestOnboardingQuestionId: null | string;
-  maxMembers: number;
-  maxStageVideoChannelUsers: number;
-  maxVideoChannelUsers: number;
-  mfaLevel: number;
-  name: string;
-  nsfwLevel: number;
-  ownerId: string;
-  preferredLocale: string;
-  premiumProgressBarEnabled: boolean;
-  premiumSubscriberCount: number;
-  premiumTier: number;
-  publicUpdatesChannelId: string;
-  roles: {
-    [key: string]: object;
-  };
-  rulesChannelId: string;
-  safetyAlertsChannelId: null | string;
-  splash: null | string;
-  systemChannelFlags: number;
-  systemChannelId: string;
-  vanityURLCode: string;
-  verificationLevel: number;
-  acronym: string;
-  getApplicationId: DefaultTypes.AnyFunction;
-  getIconSource: DefaultTypes.AnyFunction;
-  getIconURL: DefaultTypes.AnyFunction;
-  getMaxEmojiSlots: DefaultTypes.AnyFunction;
-  getMaxRoleSubscriptionEmojiSlots: DefaultTypes.AnyFunction;
-  getRole: DefaultTypes.AnyFunction;
-  hasCommunityInfoSubheader: DefaultTypes.AnyFunction;
-  hasFeature: DefaultTypes.AnyFunction;
-  hasVerificationGate: DefaultTypes.AnyFunction;
-  isLurker: DefaultTypes.AnyFunction;
-  isNew: DefaultTypes.AnyFunction;
-  isOwner: DefaultTypes.AnyFunction;
-  isOwnerWithRequiredMfaLevel: DefaultTypes.AnyFunction;
-  toString: DefaultTypes.AnyFunction;
 }
 export interface section {
   categoryId: string;
@@ -207,3 +145,5 @@ export interface sidebarProps {
     useStore: DefaultTypes.AnyFunction;
   };
 }
+
+export * as default from "./types";

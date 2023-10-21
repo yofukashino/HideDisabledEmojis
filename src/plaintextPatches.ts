@@ -5,14 +5,9 @@ export default [
     replacements: [
       {
         match:
-          /((\w+)\s*=\s*\w+\s*\.\s*memo\s*\(\s*\(\s*function\s*\(\s*.\)\s*{\s*var\s*\w+\s*=\s*.\s*\.\s*diversitySurrogate\s*,\s*\w+\s*=\s*.\s*\.\s*emojiGrid[^]*?)(const)/,
-        replace:
-          `$1replugged.webpack.waitForModule(replugged.webpack.filters.bySource("emojiListRef:"),{raw:true, timeout: 10000}).then((mod)=>Object.defineProperty(mod.exports,"EmojiPicker",{` +
-          `get:()=>$2,` +
-          `set:(value)=>$2=value,` +
-          `configurable:true,` +
-          `writeable:true` +
-          `}));$3`,
+          /(\w+\s*\?\s*\(\s*0\s*,\s*\w+\s*\.\s*jsx\s*\)\s*\(\s*)(\w+\s*)(,\s*{\s*collapsedSections)/,
+        replace: (_orig: string, prefix: string, fn: string, suffix: string): string =>
+          `${prefix}${fn}=replugged.plugins.getExports("dev.tharki.HideDisabledEmojis")?._assignEmojiPicker(${fn})??${fn}${suffix}`,
       },
     ],
   },

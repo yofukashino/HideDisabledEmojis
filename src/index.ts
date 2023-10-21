@@ -3,6 +3,7 @@ export const PluginLogger = Logger.plugin("HideDisabledEmojis");
 export const PluginInjector = new Injector();
 
 import { applyInjections } from "./patches/index";
+
 export const start = (): void => {
   applyInjections();
 };
@@ -10,3 +11,5 @@ export const start = (): void => {
 export const stop = (): void => {
   PluginInjector.uninjectAll();
 };
+
+export { _assignEmojiPicker } from "./plaintextFunctions";

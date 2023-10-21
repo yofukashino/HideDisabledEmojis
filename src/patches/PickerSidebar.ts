@@ -1,9 +1,9 @@
-import { common, webpack } from "replugged";
+import { webpack } from "replugged";
+import { guilds as UltimateGuildsStore } from "replugged/common";
 import { PluginInjector } from "../index";
 import { EmojiStore, EmojiUtils, PickerSidebar } from "../lib/requiredModules";
 import * as Types from "../types";
-const { guilds: UltimateGuildsStore } = common;
-export const patchEmojiSidebar = (): void => {
+export default (): void => {
   const SidebarRender = webpack.getFunctionKeyBySource(
     PickerSidebar,
     /rowCountBySection:\w+,renderSection:\w+/,
@@ -33,7 +33,7 @@ export const patchEmojiSidebar = (): void => {
     PluginInjector.after(
       sidebarProps,
       "renderCategoryListItem",
-      (_args, res: Types.ReactElement) => {
+      (_args, res: React.ReactElement) => {
         res.props.categories = sidebarProps.categories;
         res.props.category = sidebarProps.categories[res.props.categoryIndex];
         return res;

@@ -1,8 +1,10 @@
 import { PluginInjector } from "../index";
 import { EmojiPicker, EmojiStore, EmojiUtils } from "../lib/requiredModules";
+import { assignedEmojiPicker } from "../plaintextFunctions";
 import * as Types from "../types";
 
-export const patchEmojiPicker = (): void => {
+export default async (): Promise<void> => {
+  await assignedEmojiPicker;
   PluginInjector.before(EmojiPicker.EmojiPicker, "type", (args: [Types.pickerArgs]) => {
     const mappedEmojiCount = new Map<string, number>([["PREMIUM_UPSELL", 0]]);
     const isCollapsedButUsable = (section): boolean => {
@@ -63,9 +65,8 @@ export const patchEmojiPicker = (): void => {
       .filter((section) => section.count);
 
     args[0].rowCountBySection = args[0]?.sectionDescriptors?.map((section) =>
-      args[0]?.collapsedSections.has(section?.sectionId) ? 0 : Math.ceil(section.count / 9),
+      args[0]?.collapsedSections.has(section?.sectionId) ? 0 : Math.ceil(section.count / 8),
     );
-
     return args;
   });
 };
