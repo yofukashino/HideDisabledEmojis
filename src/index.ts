@@ -11,5 +11,3 @@ export const start = (): void => {
 export const stop = (): void => {
   PluginInjector.uninjectAll();
 };
-
-export { _assignEmojiPicker } from "./plaintextFunctions";

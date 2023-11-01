@@ -1,6 +1,7 @@
 export { types as DefaultTypes } from "replugged";
 import { types as DefaultTypes } from "replugged";
 import { Guild } from "discord-types/general";
+import { Store } from "replugged/dist/renderer/modules/common/flux";
 export interface GenericModule extends Record<string, DefaultTypes.AnyFunction> {}
 export interface GenericExport {
   exports: GenericModule;
@@ -21,7 +22,7 @@ export interface EmojiUtils {
   isInternalEmojiForGuildId: DefaultTypes.AnyFunction;
   sanitizeEmojiName: DefaultTypes.AnyFunction;
 }
-export interface EmojiStore {
+export interface EmojiStore extends Store {
   getBackfillTopEmojis: DefaultTypes.AnyFunction;
   getCustomEmojiById: DefaultTypes.AnyFunction;
   getDisambiguatedEmojiContext: DefaultTypes.AnyFunction;
@@ -146,4 +147,9 @@ export interface sidebarProps {
   };
 }
 
+export interface EmojiPicker {
+  $$typeof: symbol;
+  compare: null;
+  type: (e: pickerArgs) => unknown;
+}
 export * as default from "./types";

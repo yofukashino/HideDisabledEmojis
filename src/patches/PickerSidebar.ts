@@ -1,14 +1,9 @@
-import { webpack } from "replugged";
 import { guilds as UltimateGuildsStore } from "replugged/common";
 import { PluginInjector } from "../index";
 import { EmojiStore, EmojiUtils, PickerSidebar } from "../lib/requiredModules";
 import * as Types from "../types";
 export default (): void => {
-  const SidebarRender = webpack.getFunctionKeyBySource(
-    PickerSidebar,
-    /rowCountBySection:\w+,renderSection:\w+/,
-  ) as unknown as string;
-  PluginInjector.before(PickerSidebar, SidebarRender, (args: [Types.sidebarProps]) => {
+  PluginInjector.before(PickerSidebar, "default", (args: [Types.sidebarProps]) => {
     const [sidebarProps] = args;
     sidebarProps.categories = sidebarProps.categories
       .map((category) => {

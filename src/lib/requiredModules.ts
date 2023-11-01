@@ -5,16 +5,11 @@ export const EmojiUtils = webpack.getByProps<Types.EmojiUtils>([
   "isEmojiFilteredOrLocked",
   "isEmojiFiltered",
 ]);
-export const EmojiStore = webpack.getByProps<Types.EmojiStore>([
-  "getBackfillTopEmojis",
-  "getGuildEmoji",
-]);
+export const EmojiStore = webpack.getByStoreName<Types.EmojiStore>("EmojiStore");
 
 export const { exports: PickerSidebar } = webpack.getBySource<Types.GenericExport>(
-  /rowCountBySection:\w+,renderSection:\w+/,
+  ".useExpressionPickerStore.getState",
   { raw: true },
 );
 
-export const { exports: EmojiPicker } = webpack.getBySource<Types.GenericExport>("emojiListRef:", {
-  raw: true,
-});
+export const EmojiPicker = webpack.getBySource<Types.EmojiPicker>("emoji-picker-inline-upsell");

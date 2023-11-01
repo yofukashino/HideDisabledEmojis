@@ -3,7 +3,7 @@ import patchEmojiUtils from "./EmojiUtils";
 import patchPickerSidebar from "./PickerSidebar";
 
 export const applyInjections = (): void => {
-  void patchEmojiPicker();
+  patchEmojiPicker();
   patchEmojiUtils();
   patchPickerSidebar();
 };

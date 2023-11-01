@@ -1,11 +1,9 @@
 import { PluginInjector } from "../index";
 import { EmojiPicker, EmojiStore, EmojiUtils } from "../lib/requiredModules";
-import { assignedEmojiPicker } from "../plaintextFunctions";
 import * as Types from "../types";
 
-export default async (): Promise<void> => {
-  await assignedEmojiPicker;
-  PluginInjector.before(EmojiPicker.EmojiPicker, "type", (args: [Types.pickerArgs]) => {
+export default (): void => {
+  PluginInjector.before(EmojiPicker, "type", (args: [Types.pickerArgs]) => {
     const mappedEmojiCount = new Map<string, number>([["PREMIUM_UPSELL", 0]]);
     const isCollapsedButUsable = (section): boolean => {
       const usableEmojisInGuild = EmojiStore.getGuildEmoji(section?.sectionId).filter(
@@ -65,7 +63,7 @@ export default async (): Promise<void> => {
       .filter((section) => section.count);
 
     args[0].rowCountBySection = args[0]?.sectionDescriptors?.map((section) =>
-      args[0]?.collapsedSections.has(section?.sectionId) ? 0 : Math.ceil(section.count / 8),
+      args[0]?.collapsedSections.has(section?.sectionId) ? 0 : Math.ceil(section.count / 9),
     );
     return args;
   });
