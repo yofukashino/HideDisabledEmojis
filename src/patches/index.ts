@@ -7,3 +7,5 @@ export const applyInjections = (): void => {
   patchEmojiUtils();
   patchPickerSidebar();
 };
+
+export default { applyInjections };
