@@ -1,15 +1,15 @@
 import Modules from "../lib/requiredModules";
-import injectEmojiPicker from "./EmojiPicker";
+import injectEmojiCategoryUtils from "./EmojiCategoryUtils";
+import injectEmojiPickerUtils from "./EmojiPickerUtils";
 import injectEmojiUtils from "./EmojiUtils";
-import injectPickerSidebar from "./PickerSidebar";
 import injectSoundboardStore from "./SoundboardStore";
 import injectStickerStore from "./StickersStore";
 
 export const applyInjections = async (): Promise<void> => {
   await Modules.loadModules();
-  injectEmojiPicker();
+  injectEmojiCategoryUtils();
+  injectEmojiPickerUtils();
   injectEmojiUtils();
-  injectPickerSidebar();
   injectSoundboardStore();
   injectStickerStore();
 };

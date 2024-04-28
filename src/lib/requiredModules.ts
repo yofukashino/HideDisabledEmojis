@@ -8,15 +8,11 @@ Modules.loadModules = async (): Promise<void> => {
     "isEmojiFilteredOrLocked",
     "isEmojiFiltered",
   );
-  Modules.PickerSidebar ??= await webpack
-    .waitForModule<Types.GenericExport>(
-      webpack.filters.bySource(".useExpressionPickerStore.getState"),
-      { raw: true },
-    )
-    .then(({ exports }) => exports);
-  Modules.EmojiPicker ??= await webpack.waitForModule<Types.EmojiPicker>(
-    webpack.filters.bySource("emoji-picker-inline-upsell"),
+  Modules.EmojiCategoryUtils ??= await webpack.waitForProps(
+    "useEmojiCategories",
+    "useFavoriteEmojis",
   );
+  Modules.EmojiPickerUtils ??= await webpack.waitForProps("useEmojiGrid", "useEmojiSelectHandler");
   Modules.StickerSendabilityUtils ??= await webpack.waitForProps<Types.StickerSendabilityUtils>(
     "getStickerSendability",
   );

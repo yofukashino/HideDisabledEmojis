@@ -5,6 +5,7 @@ import GeneralDiscordTypes from "discord-types/general";
 export namespace Types {
   export import DefaultTypes = types;
   export type Guild = GeneralDiscordTypes.Guild;
+  export type Channel = GeneralDiscordTypes.Channel;
   export type GenericModule = Record<string, DefaultTypes.AnyFunction> & {
     default: DefaultTypes.AnyFunction;
   };
@@ -26,6 +27,33 @@ export namespace Types {
       surrogates: string;
       uniqueName: string;
     };
+  }
+  export interface EmojiCategoryUtils {
+    allowUnicodeEmojiForIntention: DefaultTypes.AnyFunction;
+    dedupeUnicodeEmojis: DefaultTypes.AnyFunction;
+    getAriaIdForEmojiCategory: DefaultTypes.AnyFunction;
+    getEmojiSubCategory: DefaultTypes.AnyFunction;
+    getSearchPlaceholder: DefaultTypes.AnyFunction;
+    getStringForEmojiCategory: DefaultTypes.AnyFunction;
+    trackEmojiFavorited: DefaultTypes.AnyFunction;
+    trackEmojiFocus: DefaultTypes.AnyFunction;
+    trackEmojiSearchEmpty: DefaultTypes.AnyFunction;
+    trackEmojiSearchResultsViewed: DefaultTypes.AnyFunction;
+    trackEmojiSearchSelect: DefaultTypes.AnyFunction;
+    trackEmojiSearchStart: DefaultTypes.AnyFunction;
+    trackEmojiSelect: DefaultTypes.AnyFunction;
+    trackPremiumSettingsPaneOpened: DefaultTypes.AnyFunction;
+    useCategoryNitroLockedStates: DefaultTypes.AnyFunction;
+    useEmojiCategories: (
+      intention: number,
+      channel: Channel,
+    ) => Array<{ type: string; id?: string; name?: string; guild?: Guild }>;
+    useEmojiInPriorityOrder: DefaultTypes.AnyFunction;
+    useEmojiSearchResults: DefaultTypes.AnyFunction;
+    useFavoriteEmojis: DefaultTypes.AnyFunction;
+    useFrequentlyUsedEmojis: DefaultTypes.AnyFunction;
+    useIsFavoriteEmoji: DefaultTypes.AnyFunction;
+    useTrackEmojiPickerOpened: DefaultTypes.AnyFunction;
   }
   export interface EmojiUtils {
     buildEmojiReactionColors: DefaultTypes.AnyFunction;
@@ -70,91 +98,35 @@ export namespace Types {
     type: number;
     visibleRowIndex: number;
   }>;
-  export interface PickerArgs {
-    channelGuildId: string | undefined;
-    collapsedSections: Set<string>;
-    disableEmojiTutorialFlow: boolean;
-    diversitySurrogate: string;
-    emojiGrid: EmojiRecords[];
-    emojiListRef: {
-      current: {
-        getListDimensions: DefaultTypes.AnyFunction;
-        getRowDescriptors: DefaultTypes.AnyFunction;
-        getScrollerNode: DefaultTypes.AnyFunction;
-        getSectionDescriptors: DefaultTypes.AnyFunction;
-        scrollIntoViewNode: DefaultTypes.AnyFunction;
-        scrollRowIntoView: DefaultTypes.AnyFunction;
-        scrollTo: DefaultTypes.AnyFunction;
-        scrollToSectionTop: DefaultTypes.AnyFunction;
-      };
+
+  export interface EmojiPickerUtils {
+    EmojiGridItemTypes: DefaultTypes.AnyFunction;
+    EmojiUpsellType: DefaultTypes.AnyFunction;
+    useCategorySelectHandler: DefaultTypes.AnyFunction;
+    useEmojiGrid: (filter: {
+      channel: Channel;
+      collapsedSections: Set<string>;
+      emojiPaddingHorizontal: number;
+      emojiSearchResults: unknown[];
+      emojiSpriteSize: number;
+      gridWidth: number;
+      includeCreateEmojiButton: boolean;
+      pickerIntention: number;
+    }) => {
+      columnCounts: number[];
+      emojiGrid: EmojiRecords[];
+      rowCountBySection: number[];
+      sectionDescriptors: Array<{
+        categoryId: string;
+        count: number;
+        guild: Guild;
+        sectionId: string;
+        type: string;
+      }>;
     };
-    emojiSize: number;
-    getEmojiItemProps: DefaultTypes.AnyFunction;
-    getEmojiRowProps: DefaultTypes.AnyFunction;
-    gridWidth: number;
-    isUsingKeyboardNavigation: { current: boolean };
-    onEmojiSelect: DefaultTypes.AnyFunction;
-    rowCount: number;
-    rowCountBySection: number[];
-    sectionDescriptors: Array<{
-      categoryId: string;
-      count: number;
-      guild: Guild;
-      sectionId: string;
-      type: string;
-    }>;
-    setCollapsedSections: DefaultTypes.AnyFunction;
+    useEmojiSelectHandler: DefaultTypes.AnyFunction;
   }
-  export interface SidebarProps {
-    categories: Array<{ type: string; id?: string; name?: string; guild?: Guild }>;
-    categoryHeight: DefaultTypes.AnyFunction;
-    categoryListRef: {
-      current: {
-        getListDimensions: DefaultTypes.AnyFunction;
-        getRowDescriptors: DefaultTypes.AnyFunction;
-        getScrollerNode: DefaultTypes.AnyFunction;
-        getSectionDescriptors: DefaultTypes.AnyFunction;
-        scrollIntoViewNode: DefaultTypes.AnyFunction;
-        scrollRowIntoView: DefaultTypes.AnyFunction;
-        scrollTo: DefaultTypes.AnyFunction;
-        scrollToSectionTop: DefaultTypes.AnyFunction;
-      };
-    };
-    children: DefaultTypes.AnyFunction;
-    className: string;
-    expressionsListRef: {
-      current: {
-        getListDimensions: DefaultTypes.AnyFunction;
-        getRowDescriptors: DefaultTypes.AnyFunction;
-        getScrollerNode: DefaultTypes.AnyFunction;
-        getSectionDescriptors: DefaultTypes.AnyFunction;
-        scrollIntoViewNode: DefaultTypes.AnyFunction;
-        scrollRowIntoView: DefaultTypes.AnyFunction;
-        scrollTo: DefaultTypes.AnyFunction;
-        scrollToSectionTop: DefaultTypes.AnyFunction;
-      };
-    };
-    getScrollOffsetForIndex: DefaultTypes.AnyFunction;
-    listPadding: number[];
-    onScroll: DefaultTypes.AnyFunction;
-    renderCategoryListItem: DefaultTypes.AnyFunction;
-    renderSection: DefaultTypes.AnyFunction;
-    rowCount: number;
-    rowCountBySection: number[];
-    store: {
-      getState: DefaultTypes.AnyFunction;
-      resetStoreState: DefaultTypes.AnyFunction;
-      setActiveCategoryIndex: DefaultTypes.AnyFunction;
-      setInspectedExpressionPosition: DefaultTypes.AnyFunction;
-      setSearchPlaceholder: DefaultTypes.AnyFunction;
-      useStore: DefaultTypes.AnyFunction;
-    };
-  }
-  export interface EmojiPicker {
-    $$typeof: symbol;
-    compare: null;
-    type: (e: PickerArgs) => unknown;
-  }
+
   export interface Sticker {
     asset: string;
     available: boolean;
@@ -234,8 +206,8 @@ export namespace Types {
   export interface Modules {
     loadModules?: () => Promise<void>;
     EmojiUtils?: EmojiUtils;
-    PickerSidebar?: GenericModule;
-    EmojiPicker?: EmojiPicker;
+    EmojiCategoryUtils?: EmojiCategoryUtils;
+    EmojiPickerUtils?: EmojiPickerUtils;
     StickerSendabilityUtils?: StickerSendabilityUtils;
     SoundboardUtils?: SoundboardUtils;
     EmojiStore?: EmojiStore;
