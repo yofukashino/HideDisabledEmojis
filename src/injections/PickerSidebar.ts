@@ -1,9 +1,13 @@
 import { guilds as UltimateGuildsStore } from "replugged/common";
-import { PluginInjector } from "../index";
-import { EmojiStore, EmojiUtils, PickerSidebar } from "../lib/requiredModules";
+import { PluginInjector, SettingValues } from "../index";
+import { defaultSettings } from "../lib/consts";
+import Modules from "../lib/requiredModules";
 import Types from "../types";
+
 export default (): void => {
+  const { EmojiStore, EmojiUtils, PickerSidebar } = Modules;
   PluginInjector.before(PickerSidebar, "default", (args: [Types.SidebarProps]) => {
+    if (!SettingValues.get("emoji", defaultSettings.emoji)) return args;
     const [sidebarProps] = args;
 
     sidebarProps.categories = sidebarProps.categories.reduce((acc, category) => {

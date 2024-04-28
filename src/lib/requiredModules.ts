@@ -1,15 +1,32 @@
 import { webpack } from "replugged";
 import Types from "../types";
 
-export const EmojiUtils = webpack.getByProps<Types.EmojiUtils>([
-  "isEmojiFilteredOrLocked",
-  "isEmojiFiltered",
-]);
-export const EmojiStore = webpack.getByStoreName<Types.EmojiStore>("EmojiStore");
+export const Modules: Types.Modules = {};
 
-export const { exports: PickerSidebar } = webpack.getBySource<Types.GenericExport>(
-  ".useExpressionPickerStore.getState",
-  { raw: true },
-);
+Modules.loadModules = async (): Promise<void> => {
+  Modules.EmojiUtils ??= await webpack.waitForProps<Types.EmojiUtils>(
+    "isEmojiFilteredOrLocked",
+    "isEmojiFiltered",
+  );
+  Modules.PickerSidebar ??= await webpack
+    .waitForModule<Types.GenericExport>(
+      webpack.filters.bySource(".useExpressionPickerStore.getState"),
+      { raw: true },
+    )
+    .then(({ exports }) => exports);
+  Modules.EmojiPicker ??= await webpack.waitForModule<Types.EmojiPicker>(
+    webpack.filters.bySource("emoji-picker-inline-upsell"),
+  );
+  Modules.StickerSendabilityUtils ??= await webpack.waitForProps<Types.StickerSendabilityUtils>(
+    "getStickerSendability",
+  );
+  Modules.SoundboardUtils ??= await webpack.waitForProps<Types.SoundboardUtils>(
+    "canUseSoundboardSound",
+    "removeCustomJoinSound",
+  );
+  Modules.EmojiStore ??= webpack.getByStoreName<Types.EmojiStore>("EmojiStore");
+  Modules.StickersStore ??= webpack.getByStoreName<Types.StickersStore>("StickersStore");
+  Modules.SoundboardStore ??= webpack.getByStoreName<Types.SoundboardStore>("SoundboardStore");
+};
 
-export const EmojiPicker = webpack.getBySource<Types.EmojiPicker>("emoji-picker-inline-upsell");
+export default Modules;

@@ -5,7 +5,9 @@ import GeneralDiscordTypes from "discord-types/general";
 export namespace Types {
   export import DefaultTypes = types;
   export type Guild = GeneralDiscordTypes.Guild;
-  export type GenericModule = Record<string, DefaultTypes.AnyFunction>;
+  export type GenericModule = Record<string, DefaultTypes.AnyFunction> & {
+    default: DefaultTypes.AnyFunction;
+  };
   export interface GenericExport {
     exports: GenericModule;
     id: number;
@@ -148,11 +150,102 @@ export namespace Types {
       useStore: DefaultTypes.AnyFunction;
     };
   }
-
   export interface EmojiPicker {
     $$typeof: symbol;
     compare: null;
     type: (e: PickerArgs) => unknown;
+  }
+  export interface Sticker {
+    asset: string;
+    available: boolean;
+    description: string;
+    format_type: number;
+    guild_id: string;
+    id: string;
+    name: string;
+    tags: string;
+    type: number;
+  }
+  export interface StickersStore extends Store {
+    getAllGuildStickers: () => Map<string, Sticker[]>;
+    getAllStickersIterator: DefaultTypes.AnyFunction;
+    getPremiumPacks: DefaultTypes.AnyFunction;
+    getRawStickersByGuild: DefaultTypes.AnyFunction;
+    getStickerById: DefaultTypes.AnyFunction;
+    getStickerPack: DefaultTypes.AnyFunction;
+    getStickersByGuildId: DefaultTypes.AnyFunction;
+    hasLoadedStickerPacks: boolean;
+    isFetchingStickerPacks: boolean;
+    isLoaded: boolean;
+    isPremiumPack: DefaultTypes.AnyFunction;
+    loadState: number;
+    stickerMetadata: Map<string, unknown>;
+  }
+  export enum StickerSendability {
+    NONSENDABLE = 2,
+    SENDABLE = 0,
+    SENDABLE_WITH_BOOSTED_GUILD = 3,
+    SENDABLE_WITH_PREMIUM = 1,
+  }
+  export interface StickerSendabilityUtils {
+    StickerSendability: typeof StickerSendability;
+    getStickerSendability: DefaultTypes.AnyFunction;
+    isSendableSticker: DefaultTypes.AnyFunction;
+  }
+  export interface Sound {
+    available: boolean;
+    emojiId: string;
+    emojiName: string;
+    guildId: string;
+    name: string;
+    soundId: string;
+    userId: string;
+    volume: number;
+  }
+  export interface SoundboardStore extends Store {
+    getFavorites: DefaultTypes.AnyFunction;
+    getOverlaySerializedState: DefaultTypes.AnyFunction;
+    getSound: DefaultTypes.AnyFunction;
+    getSoundById: DefaultTypes.AnyFunction;
+    getSounds: () => Map<string, Sound[]>;
+    getSoundsForGuild: DefaultTypes.AnyFunction;
+    hasFetchedAllSounds: DefaultTypes.AnyFunction;
+    hasFetchedDefaultSounds: DefaultTypes.AnyFunction;
+    hasHadOtherUserPlaySoundInSession: DefaultTypes.AnyFunction;
+    isFavoriteSound: DefaultTypes.AnyFunction;
+    isFetching: DefaultTypes.AnyFunction;
+    isFetchingDefaultSounds: DefaultTypes.AnyFunction;
+    isFetchingSounds: DefaultTypes.AnyFunction;
+    isLocalSoundboardMuted: DefaultTypes.AnyFunction;
+    isPlayingSound: DefaultTypes.AnyFunction;
+    isUserPlayingSounds: DefaultTypes.AnyFunction;
+    shouldFetchDefaultSounds: DefaultTypes.AnyFunction;
+  }
+  export interface SoundboardUtils {
+    canUseSoundboardSound: DefaultTypes.AnyFunction;
+    getAmplitudinalSoundboardVolume: DefaultTypes.AnyFunction;
+    maybePlayCustomJoinSound: DefaultTypes.AnyFunction;
+    playSound: DefaultTypes.AnyFunction;
+    removeCustomJoinSound: DefaultTypes.AnyFunction;
+    trackCustomCallSoundExternallyDeleted: DefaultTypes.AnyFunction;
+    updateCustomJoinSound: DefaultTypes.AnyFunction;
+    useSoundBoardDismissContentTypes: DefaultTypes.AnyFunction;
+  }
+  export interface Modules {
+    loadModules?: () => Promise<void>;
+    EmojiUtils?: EmojiUtils;
+    PickerSidebar?: GenericModule;
+    EmojiPicker?: EmojiPicker;
+    StickerSendabilityUtils?: StickerSendabilityUtils;
+    SoundboardUtils?: SoundboardUtils;
+    EmojiStore?: EmojiStore;
+    StickersStore?: StickersStore;
+    SoundboardStore?: SoundboardStore;
+  }
+  export interface Settings {
+    emoji: boolean;
+    sticker: boolean;
+    sound: boolean;
   }
 }
 export default Types;

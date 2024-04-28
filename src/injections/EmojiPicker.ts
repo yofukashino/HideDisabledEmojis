@@ -1,9 +1,12 @@
-import { PluginInjector } from "../index";
-import { EmojiPicker, EmojiStore, EmojiUtils } from "../lib/requiredModules";
+import { PluginInjector, SettingValues } from "../index";
+import { defaultSettings } from "../lib/consts";
+import Modules from "../lib/requiredModules";
 import Types from "../types";
 
 export default (): void => {
+  const { EmojiPicker, EmojiStore, EmojiUtils } = Modules;
   PluginInjector.before(EmojiPicker, "type", (args) => {
+    if (!SettingValues.get("emoji", defaultSettings.emoji)) return args;
     const [PickerArgs] = args;
     const MappedEmojiCount = new Map<string, number>([["PREMIUM_UPSELL", 0]]);
     const NonGuildCategories = [
@@ -33,8 +36,25 @@ export default (): void => {
       section?.type === "TOP_GUILD_EMOJI" ||
       isCollapsedButUsable(section);
 
-    PickerArgs.emojiGrid = PickerArgs?.emojiGrid.reduce((acc: Types.EmojiRecords[], row) => {
+    PickerArgs.emojiGrid = PickerArgs?.emojiGrid.reduce((acc: Types.EmojiRecords[], row, index) => {
       const filteredRow = row.filter((item) => !item.isDisabled);
+      const previousRow = acc[index - 1];
+      const previousId = NonGuildCategories.includes(previousRow?.[0]?.category)
+        ? previousRow?.[0]?.category
+        : previousRow?.[0]?.emoji?.guildId ?? previousRow?.[0]?.guildId;
+      const currentId = NonGuildCategories.includes(filteredRow[0]?.category)
+        ? filteredRow[0].category
+        : filteredRow[0]?.emoji?.guildId ?? filteredRow[0]?.guildId;
+      if (
+        previousRow &&
+        previousId === currentId &&
+        previousRow?.length < 9 &&
+        filteredRow.length
+      ) {
+        const addCount = 9 - previousRow.length;
+        const emojis = filteredRow.splice(0, addCount);
+        previousRow.push(...emojis);
+      }
       if (filteredRow.length) acc.push(filteredRow);
       return acc;
     }, []);
@@ -49,7 +69,7 @@ export default (): void => {
         : EmojiItem?.emoji?.guildId ?? EmojiItem?.guildId;
       MappedEmojiCount.set(key, (MappedEmojiCount.get(key) || 0) + 1);
     }
-
+    console.log(PickerArgs);
     PickerArgs.sectionDescriptors = PickerArgs.sectionDescriptors.reduce((acc, section) => {
       if (shouldReturnOriginal(section)) {
         acc.push(section);

@@ -1,7 +1,7 @@
 {
   "id": "dev.tharki.HideDisabledEmojis",
   "name": "HideDisabledEmojis",
-  "description": "Hides disabled emojis from the emoji picker.",
+  "description": "Hides disabled emojis from the emoji picker and more.",
   "image": "https://i.imgur.com/yUNq7fd.png",
   "source": "https://github.com/YofukashiNo/HideDisabledEmojis",
   "author": {

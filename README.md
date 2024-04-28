@@ -1,6 +1,6 @@
 ### HideDisabledEmojis
 
-Hides disabled emojis from the emoji picker.
+Hides disabled emojis from the emoji picker and more. <sup>(Check Settings)</sup>
 
 Would not hide emojis if something like nitro spoof is used.
 
@@ -12,8 +12,7 @@ Install Link:
 
 ![hde](https://i.imgur.com/yUNq7fd.png)
 
-<sub>Inspired by a Better Discord plugin made by
-[rauenzi](https://github.com/rauenzi/BetterDiscordAddons/tree/master/Plugins/HideDisabledEmojis).</sub>
+<sub>Inspired by a Better Discord plugin made by [rauenzi](https://github.com/rauenzi/BetterDiscordAddons/tree/master/Plugins/HideDisabledEmojis).</sub>
 
 
 ---
