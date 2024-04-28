@@ -9,7 +9,9 @@ export default (): void => {
   PluginInjector.after(SoundboardStore, "getSounds", (_args, res) => {
     if (!SettingValues.get("sound", defaultSettings.sound)) return res;
     const currnetUser = UltimateUserStore.getCurrentUser();
-    const currentChannel = UltimateChannelStore.getChannel(UltimateChannelStore.getChannelId());
+    const currentChannel = UltimateChannelStore.getChannel(
+      UltimateChannelStore.getVoiceChannelId(),
+    );
     const filteredStickers = Array.from(res).map<[string, Types.Sound[]]>(([id, sounds]) => [
       id,
       sounds.filter((c) => SoundboardUtils.canUseSoundboardSound(currnetUser, c, currentChannel)),
