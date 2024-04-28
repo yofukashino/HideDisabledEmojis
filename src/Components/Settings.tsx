@@ -25,7 +25,7 @@ export const Settings = () => {
         Stickers
       </SwitchItem>
       <SwitchItem
-        note="Hide Sounds you can't send."
+        note="Hide Sounds you can't play."
         {...util.useSetting(SettingValues, "sound", defaultSettings.sound)}>
         Sounds
       </SwitchItem>

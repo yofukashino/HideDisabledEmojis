@@ -69,7 +69,7 @@ export default (): void => {
         : EmojiItem?.emoji?.guildId ?? EmojiItem?.guildId;
       MappedEmojiCount.set(key, (MappedEmojiCount.get(key) || 0) + 1);
     }
-    console.log(PickerArgs);
+
     PickerArgs.sectionDescriptors = PickerArgs.sectionDescriptors.reduce((acc, section) => {
       if (shouldReturnOriginal(section)) {
         acc.push(section);
