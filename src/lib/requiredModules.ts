@@ -12,7 +12,6 @@ Modules.loadModules = async (): Promise<void> => {
     "useEmojiCategories",
     "useFavoriteEmojis",
   );
-  Modules.EmojiPickerUtils ??= await webpack.waitForProps("useEmojiGrid", "useEmojiSelectHandler");
   Modules.StickerSendabilityUtils ??= await webpack.waitForProps<Types.StickerSendabilityUtils>(
     "getStickerSendability",
   );
@@ -20,7 +19,6 @@ Modules.loadModules = async (): Promise<void> => {
     "canUseSoundboardSound",
     "removeCustomJoinSound",
   );
-  Modules.EmojiStore ??= webpack.getByStoreName<Types.EmojiStore>("EmojiStore");
   Modules.StickersStore ??= webpack.getByStoreName<Types.StickersStore>("StickersStore");
   Modules.SoundboardStore ??= webpack.getByStoreName<Types.SoundboardStore>("SoundboardStore");
 };

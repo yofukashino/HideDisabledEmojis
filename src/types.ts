@@ -47,7 +47,14 @@ export namespace Types {
     useEmojiCategories: (
       intention: number,
       channel: Channel,
-    ) => Array<{ type: string; id?: string; name?: string; guild?: Guild }>;
+    ) => Array<{
+      type: string;
+      id?: string;
+      name?: string;
+      guild?: Guild;
+      emojis: Emoji[];
+      emojisDisabled: Set<string>;
+    }>;
     useEmojiInPriorityOrder: DefaultTypes.AnyFunction;
     useEmojiSearchResults: DefaultTypes.AnyFunction;
     useFavoriteEmojis: DefaultTypes.AnyFunction;
@@ -207,10 +214,8 @@ export namespace Types {
     loadModules?: () => Promise<void>;
     EmojiUtils?: EmojiUtils;
     EmojiCategoryUtils?: EmojiCategoryUtils;
-    EmojiPickerUtils?: EmojiPickerUtils;
     StickerSendabilityUtils?: StickerSendabilityUtils;
     SoundboardUtils?: SoundboardUtils;
-    EmojiStore?: EmojiStore;
     StickersStore?: StickersStore;
     SoundboardStore?: SoundboardStore;
   }

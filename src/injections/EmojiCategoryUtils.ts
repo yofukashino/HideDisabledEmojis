@@ -4,17 +4,19 @@ import { defaultSettings } from "../lib/consts";
 import Modules from "../lib/requiredModules";
 
 export default (): void => {
-  const { EmojiStore, EmojiUtils, EmojiCategoryUtils } = Modules;
-  PluginInjector.after(EmojiCategoryUtils, "useEmojiCategories", ([intention, channel], res) => {
+  const { EmojiCategoryUtils } = Modules;
+  PluginInjector.after(EmojiCategoryUtils, "useEmojiCategories", (_args, res) => {
     if (!SettingValues.get("emoji", defaultSettings.emoji)) return res;
     return res.reduce((acc, category) => {
       if (!category?.guild || UltimateGuildsStore.getGuildId() == category?.guild?.id) {
         acc.push(category);
         return acc;
       }
-      const UsableEmojisInGuild = EmojiStore.getGuildEmoji(category?.guild?.id).filter(
-        (emoji) => !EmojiUtils.isEmojiDisabled({ emoji, channel, intention }),
+
+      const UsableEmojisInGuild = category.emojis.filter(
+        (emoji) => emoji.available && !category.emojisDisabled.has(emoji.id),
       );
+
       if (UsableEmojisInGuild.length) acc.push(category);
       return acc;
     }, []);

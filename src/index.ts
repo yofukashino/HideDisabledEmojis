@@ -16,3 +16,5 @@ export const stop = (): void => {
 };
 
 export { Settings } from "./Components/Settings";
+
+export { _filteredEmojis } from "./plaintextFunctions";
