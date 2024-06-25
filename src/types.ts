@@ -28,40 +28,7 @@ export namespace Types {
       uniqueName: string;
     };
   }
-  export interface EmojiCategoryUtils {
-    allowUnicodeEmojiForIntention: DefaultTypes.AnyFunction;
-    dedupeUnicodeEmojis: DefaultTypes.AnyFunction;
-    getAriaIdForEmojiCategory: DefaultTypes.AnyFunction;
-    getEmojiSubCategory: DefaultTypes.AnyFunction;
-    getSearchPlaceholder: DefaultTypes.AnyFunction;
-    getStringForEmojiCategory: DefaultTypes.AnyFunction;
-    trackEmojiFavorited: DefaultTypes.AnyFunction;
-    trackEmojiFocus: DefaultTypes.AnyFunction;
-    trackEmojiSearchEmpty: DefaultTypes.AnyFunction;
-    trackEmojiSearchResultsViewed: DefaultTypes.AnyFunction;
-    trackEmojiSearchSelect: DefaultTypes.AnyFunction;
-    trackEmojiSearchStart: DefaultTypes.AnyFunction;
-    trackEmojiSelect: DefaultTypes.AnyFunction;
-    trackPremiumSettingsPaneOpened: DefaultTypes.AnyFunction;
-    useCategoryNitroLockedStates: DefaultTypes.AnyFunction;
-    useEmojiCategories: (
-      intention: number,
-      channel: Channel,
-    ) => Array<{
-      type: string;
-      id?: string;
-      name?: string;
-      guild?: Guild;
-      emojis: Emoji[];
-      emojisDisabled: Set<string>;
-    }>;
-    useEmojiInPriorityOrder: DefaultTypes.AnyFunction;
-    useEmojiSearchResults: DefaultTypes.AnyFunction;
-    useFavoriteEmojis: DefaultTypes.AnyFunction;
-    useFrequentlyUsedEmojis: DefaultTypes.AnyFunction;
-    useIsFavoriteEmoji: DefaultTypes.AnyFunction;
-    useTrackEmojiPickerOpened: DefaultTypes.AnyFunction;
-  }
+
   export interface EmojiUtils {
     buildEmojiReactionColors: DefaultTypes.AnyFunction;
     filterUnsupportedEmojis: DefaultTypes.AnyFunction;
@@ -201,20 +168,22 @@ export namespace Types {
     shouldFetchDefaultSounds: DefaultTypes.AnyFunction;
   }
   export interface SoundboardUtils {
-    canUseSoundboardSound: DefaultTypes.AnyFunction;
-    getAmplitudinalSoundboardVolume: DefaultTypes.AnyFunction;
-    maybePlayCustomJoinSound: DefaultTypes.AnyFunction;
-    playSound: DefaultTypes.AnyFunction;
-    removeCustomJoinSound: DefaultTypes.AnyFunction;
-    trackCustomCallSoundExternallyDeleted: DefaultTypes.AnyFunction;
-    updateCustomJoinSound: DefaultTypes.AnyFunction;
-    useSoundBoardDismissContentTypes: DefaultTypes.AnyFunction;
+    canUseSoundboardSound?: DefaultTypes.AnyFunction;
+    getAmplitudinalSoundboardVolume?: DefaultTypes.AnyFunction;
+    maybePlayCustomJoinSound?: DefaultTypes.AnyFunction;
+    playSound?: DefaultTypes.AnyFunction;
+    removeCustomJoinSound?: DefaultTypes.AnyFunction;
+    trackCustomCallSoundExternallyDeleted?: DefaultTypes.AnyFunction;
+    updateCustomJoinSound?: DefaultTypes.AnyFunction;
+    useSoundBoardDismissContentTypes?: DefaultTypes.AnyFunction;
   }
   export interface Modules {
     loadModules?: () => Promise<void>;
     EmojiUtils?: EmojiUtils;
-    EmojiCategoryUtils?: EmojiCategoryUtils;
+    EmojiCategoryUtils?: GenericModule;
+    StickerSendabilityUtilsModule?: GenericModule;
     StickerSendabilityUtils?: StickerSendabilityUtils;
+    SoundboardUtilsModule?: GenericModule;
     SoundboardUtils?: SoundboardUtils;
     StickersStore?: StickersStore;
     SoundboardStore?: SoundboardStore;

@@ -2,7 +2,7 @@ import Types from "./types";
 
 export default [
   {
-    find: "useEmojiGrid:",
+    find: ".CREATE_EMOJI=1",
     replacements: [
       {
         match:
