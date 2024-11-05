@@ -13,12 +13,9 @@ Modules.loadModules = async (): Promise<void> => {
     });
 
   Modules.EmojiCategoryUtils ??= await webpack
-    .waitForModule<Types.GenericModule>(
-      webpack.filters.bySource(".categories.reduce"),
-      {
-        timeout: 10000,
-      },
-    )
+    .waitForModule<Types.GenericModule>(webpack.filters.bySource(".categories.reduce"), {
+      timeout: 10000,
+    })
     .catch(() => {
       throw new Error("Failed To Find EmojiCategoryUtils Module");
     });
