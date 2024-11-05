@@ -14,7 +14,7 @@ Modules.loadModules = async (): Promise<void> => {
 
   Modules.EmojiCategoryUtils ??= await webpack
     .waitForModule<Types.GenericModule>(
-      webpack.filters.bySource("Messages.EMOJI_CATEGORY_TOP_GUILD_EMOJI"),
+      webpack.filters.bySource(".categories.reduce"),
       {
         timeout: 10000,
       },
