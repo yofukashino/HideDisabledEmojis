@@ -1,3 +1,4 @@
+import { users as UltimateUserStore } from "replugged/common";
 import { SettingValues } from ".";
 import { defaultSettings } from "./lib/consts";
 import Modules from "./lib/requiredModules";
@@ -9,7 +10,7 @@ export const _filteredEmojis = (
   intention,
 ): Types.Emoji[] => {
   if (!SettingValues.get("emoji", defaultSettings.emoji)) return emojis;
-  if (section.isNitroLocked) return [];
+  if (section.isNitroLocked && !UltimateUserStore.getCurrentUser().premiumType) return [];
   return emojis.filter(
     (emoji) =>
       !emoji.guildId ||
