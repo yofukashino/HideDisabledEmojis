@@ -23,7 +23,6 @@ export default (): void => {
     ]);
 
     const filteredMap = new Map(filteredStickers);
-    console.log(`${currnetUser.id}-${currentChannel.id}`, res, filteredMap);
     stickerMapCache.set(`${currnetUser.id}-${currentChannel.id}`, filteredMap);
     return filteredMap;
   });
