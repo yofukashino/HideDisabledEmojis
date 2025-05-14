@@ -119,7 +119,7 @@ export namespace Types {
     getRawStickersByGuild: DefaultTypes.AnyFunction;
     getStickerById: DefaultTypes.AnyFunction;
     getStickerPack: DefaultTypes.AnyFunction;
-    getStickersByGuildId: DefaultTypes.AnyFunction;
+    getStickersByGuildId: (guildId: string) => Sticker[];
     hasLoadedStickerPacks: boolean;
     isFetchingStickerPacks: boolean;
     isLoaded: boolean;
